@@ -1,0 +1,110 @@
+# ======================
+# WPF / .NET 项目通用忽略
+# ======================
+
+# 编译输出目录（WPF核心必须忽略）
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.xml
+*.json
+*.config
+*.user
+*.suo
+*.userprefs
+*.csproj.user
+
+# 临时文件
+*.tmp
+*.log
+*.log.*
+*.tmp.*
+*.cache
+*.temp
+*.backup
+*.bak
+
+# ======================
+# Visual Studio 相关
+# ======================
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.msbuild*
+*.vcxproj*
+*.vcxitems*
+*.vcxproj.filters
+*.vcxproj.user
+*.vcxitems.filters
+*.vcxitems.user
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.opendb
+*.VC.VC.opendb
+*.VC.db-shm
+*.VC.db-wal
+*.ipch
+*.aps
+*.ncb
+*.sbr
+
+# ======================
+# NuGet 相关
+# ======================
+packages/
+*.nupkg
+*.snupkg
+*.nuspec
+.nuget/
+NuGet.Config
+NuGet.exe
+NuGet.targets
+packages.config
+*.nuget.props
+*.nuget.targets
+
+# ======================
+# 系统文件
+# ======================
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tmp
+*.lnk
+
+# ======================
+# 其他临时/环境文件
+# ======================
+*.user
+*.suo
+*.userprefs
+*.csproj.user
+*.sln.DotSettings.user
+.idea/
+*.iml
+*.iws
+*.ipr
+*.swp
+*.swo
+*~
+*.tmp
+*.log
+*.pid
+*.lock
+*.tmp.lock
+
+# ======================
+# 你的项目专属（可选，按需保留）
+# ======================
+# 如果你有本地配置文件、日志目录等，可以在这里加
+# logs/
+# config/
+# *.local.config
