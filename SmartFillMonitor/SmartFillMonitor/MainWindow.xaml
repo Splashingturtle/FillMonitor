@@ -4,8 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartFillMonitor"
+        xmlns:UserControls="clr-namespace:SmartFillMonitor.UserControls"
+        xmlns:vm="clr-namespace:SmartFillMonitor.ViewModels"
+        xmlns:views="clr-namespace:SmartFillMonitor.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="{StaticResource AppBgDark}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type vm:DashBoardViewModel}">
+                <views:DashBoardView/>
+            </DataTemplate>
+           
+            <DataTemplate DataType="{x:Type vm:DashQueryViewModel}">
+                <views:DashQueryView/>
+            </DataTemplate>
+           
+            <DataTemplate DataType="{x:Type vm:LogsViewModel}">
+                <views:LogsView/>
+            </DataTemplate>
+         
+            <DataTemplate DataType="{x:Type vm:AlarmsViewModel}">
+                <views:AlarmsView/>
+            </DataTemplate>
+              
+            <DataTemplate DataType="{x:Type vm:SettingViewModel}">
+                <views:SettingView/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -15,8 +41,9 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-        <ContentControl Grid.Column="0" Grid.RowSpan="2"/>
+        
+        <!--左侧导航栏-->
+        <UserControls:NavigationMenu Grid.Column="0" Grid.RowSpan="2"/>
 
         <Border Grid.Column="1" Grid.Row="0" Background="{StaticResource AppBgHeader}" BorderBrush="{StaticResource AppBorderBrush}" BorderThickness="0,0,0,1">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -24,6 +51,6 @@
             </StackPanel>
         </Border>
 
-        <ContentControl Grid.Column="1" Grid.Row="1" Margin="20" Background="{StaticResource AppBgDark}"/> 
+        <ContentControl Grid.Column="1" Grid.Row="1" Margin="20" Background="{StaticResource AppBgDark}" Content="{Binding CurrentView}"/> 
     </Grid>
 </Window>

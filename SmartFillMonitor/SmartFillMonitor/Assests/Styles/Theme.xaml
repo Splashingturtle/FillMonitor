@@ -7,7 +7,9 @@
     <!--Tap、Header背景-->
     <SolidColorBrush x:Key="AppBgHeader" Color="#2D2D30"/>
     <!--主按钮、选中导航、边框背景-->
-    <SolidColorBrush x:Key="AppAccentColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="AppAccentColor" Color="#007ACC"/>
+    <!--主要文字颜色：正文、标题背景-->
+    <SolidColorBrush x:Key="AppTextMain" Color="#FFFFFF"/>
     <!--次要文字背景颜色、占位文本背景-->
     <SolidColorBrush x:Key="AppTextMuted" Color="#AAAAAA"/>
     <!--成功：显示成功、正常状态背景-->
@@ -21,4 +23,35 @@
     <!--通用边框颜色：控件边框、Card背景-->
     <SolidColorBrush x:Key="AppBorderBrush" Color="#3E3E42"/>
    
+    <!--Navigation Item Style-->
+    <Style x:Key="NavItemStyle" TargetType="RadioButton">
+        <Setter Property="Foreground" Value="{StaticResource AppTextMuted}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="3,0,0,0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Padding" Value="20,15"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#3E3E42"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background" Value="#37373D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource AppAccentColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>   
