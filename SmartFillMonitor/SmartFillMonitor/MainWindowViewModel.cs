@@ -15,7 +15,7 @@ namespace SmartFillMonitor
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
-        private object currentView;
+        private object mainContent;
         private readonly IServiceProvider _serviceProvider;
 
         private readonly DispatcherTimer _timer;
@@ -41,31 +41,31 @@ namespace SmartFillMonitor
 
         #region Navigation Commands
         [RelayCommand]  
-        private void NavigateToDashBoard()
+        private void Navigate(string? destination)
         {
-            CurrentView = _serviceProvider.GetRequiredService<DashBoardViewModel>();
-        }
-        [RelayCommand]
-        private void NavigateToDataQuery()
-        {
-            CurrentView = _serviceProvider.GetRequiredService<DashQueryViewModel>();
-        }
-        [RelayCommand]
-        private void NavigateToLogs()
-        {
-            CurrentView = _serviceProvider.GetRequiredService<LogsViewModel>();
-        }
-        [RelayCommand]
-        private void NavigateToAlarms()
-        {
-            CurrentView = _serviceProvider.GetRequiredService<AlarmsViewModel>();
-        }
-        [RelayCommand]
-        private void NavigateToSetting()
-        {
-            CurrentView = _serviceProvider.GetRequiredService<SettingViewModel>();
-        }
+            if (string.IsNullOrEmpty(destination)) return;
 
+            switch (destination)
+            {
+                case "Dashboard":
+                    MainContent = _serviceProvider.GetRequiredService<DashBoardViewModel>();
+                    break;
+                case "DataQuery":
+                    MainContent = _serviceProvider.GetRequiredService<DashQueryViewModel>();
+                    break;
+                case "Logs":
+                    MainContent = _serviceProvider.GetRequiredService<DashBoardViewModel>();
+                    break;
+                case "Alarms":
+                    MainContent = _serviceProvider.GetRequiredService<AlarmsViewModel>();
+                    break;
+                case "Settings":
+                    MainContent = _serviceProvider.GetRequiredService<SettingViewModel>();
+                    break;
+                default:
+                    break;
+            }
+        }
         #endregion
     }
 }

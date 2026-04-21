@@ -5,33 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartFillMonitor"
         xmlns:UserControls="clr-namespace:SmartFillMonitor.UserControls"
-        xmlns:vm="clr-namespace:SmartFillMonitor.ViewModels"
-        xmlns:views="clr-namespace:SmartFillMonitor.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="{StaticResource AppBgDark}">
-    <Window.Resources>
-        <ResourceDictionary>
-            <DataTemplate DataType="{x:Type vm:DashBoardViewModel}">
-                <views:DashBoardView/>
-            </DataTemplate>
-           
-            <DataTemplate DataType="{x:Type vm:DashQueryViewModel}">
-                <views:DashQueryView/>
-            </DataTemplate>
-           
-            <DataTemplate DataType="{x:Type vm:LogsViewModel}">
-                <views:LogsView/>
-            </DataTemplate>
-         
-            <DataTemplate DataType="{x:Type vm:AlarmsViewModel}">
-                <views:AlarmsView/>
-            </DataTemplate>
-              
-            <DataTemplate DataType="{x:Type vm:SettingViewModel}">
-                <views:SettingView/>
-            </DataTemplate>
-        </ResourceDictionary>
-    </Window.Resources>
+        Title="MainWindow" Height="700" Width="1000" Background="{StaticResource AppBgDark}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -51,6 +26,7 @@
             </StackPanel>
         </Border>
 
-        <ContentControl Grid.Column="1" Grid.Row="1" Margin="20" Background="{StaticResource AppBgDark}" Content="{Binding CurrentView}"/> 
+        
+        <ContentControl Grid.Column="1" Grid.Row="1" Margin="20" Background="{StaticResource AppBgDark}" Content="{Binding MainContent}"/> 
     </Grid>
 </Window>
