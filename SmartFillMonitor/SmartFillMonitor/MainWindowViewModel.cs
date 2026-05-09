@@ -54,7 +54,7 @@ namespace SmartFillMonitor
                     MainContent = _serviceProvider.GetRequiredService<DashQueryViewModel>();
                     break;
                 case "Logs":
-                    MainContent = _serviceProvider.GetRequiredService<DashBoardViewModel>();
+                    MainContent = _serviceProvider.GetRequiredService<LogsViewModel>();
                     break;
                 case "Alarms":
                     MainContent = _serviceProvider.GetRequiredService<AlarmsViewModel>();

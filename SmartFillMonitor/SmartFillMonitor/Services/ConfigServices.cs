@@ -1,4 +1,5 @@
 ﻿using SmartFillMonitor.Models;
+using SmartFillMonitor.Services.Logs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -36,21 +37,24 @@ namespace SmartFillMonitor.Services
                         settings = JsonSerializer.Deserialize<DeviceSettings>(json, opt);
                         if (settings != null)
                         {
+                            LogService.Info($"配置加载成功！{path}");
                             return settings;
                         }
                     }
                     catch (JsonException jsonEx)
                     {
+                        LogService.Error($"配置文件格式错误，将其充值位默认值：{jsonEx.Message}"); 
                         BackCorrupFile(path);//备份损坏的文件
                     }
                     catch (Exception ex)
                     {
-
+                        LogService.Error($"读取配置文件失败：{ex.Message}");
                     }
                 }
                 else
                 {
                     //提示文件不存在，返回默认设置
+                    LogService.Warn($"配置文件不存在，将创建新的默认配置：{path}");
                 }
             }
             finally
@@ -84,11 +88,13 @@ namespace SmartFillMonitor.Services
                 await File.WriteAllTextAsync(tempPath, json);
                 File.Move(tempPath, path, true);//覆盖写入
                 //提示配置保存成功
+                LogService.Info($"配置保存成功！{path}");
                 MessageBox.Show("配置保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 return true;
             }
             catch (Exception ex)
             {
+                LogService.Error($"保存配置文件失败",ex);
                 return false;
             }
             finally
@@ -115,6 +121,7 @@ namespace SmartFillMonitor.Services
                 //生成备份路径
                 var backupPath = originalPath + ".corrupt" + DateTime.Now.ToString("yyyyMMddHHmmss");
                 File.Copy(originalPath, backupPath, true);//拷贝操作
+                LogService.Warn($"已备份损坏的配置文件：{backupPath}");    
             }
             catch (Exception)
             {

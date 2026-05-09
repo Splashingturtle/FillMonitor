@@ -2,9 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using SmartFillMonitor.Models;
 using SmartFillMonitor.Services;
+using SmartFillMonitor.Services.Logs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,6 +65,7 @@ namespace SmartFillMonitor.ViewModels
 
         public SettingViewModel()
         {
+            RefreshPortList();
             try
             {
                 LoadSettings();
@@ -70,6 +73,32 @@ namespace SmartFillMonitor.ViewModels
             catch (Exception ex)
             {
                 //加载失败
+                LogService.Error($"加载配置失败,使用默认值，原因：{ex.Message}");
+            }
+        }
+
+        private void RefreshPortList()
+        {
+            PortNames.Clear();
+            try
+            {
+                var ports = PlcService.GetAvailablePorts() ?? SerialPort.GetPortNames();
+                foreach ( var item in ports)
+                {
+                    PortNames.Add(item);
+                }
+                if (!string.IsNullOrEmpty(PortName) && !PortNames.Contains(PortName))
+                {
+                    PortName = PortNames.Count > 0 ? PortNames[0] : PortName;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.Error($"获取窗口列表失败：{ex.Message}");
+                PortNames.Clear();
+                PortNames.Add("COM1");
+                PortNames.Add("COM2");
             }
         }
         private async void LoadSettings()
@@ -79,7 +108,7 @@ namespace SmartFillMonitor.ViewModels
             SelectedBaud = ds.BaudRate;
             SelectedDataBits = ds.DataBits;
             SelectedParity = ds.Parity;
-            SelectedStopBits = string.IsNullOrEmpty(ds.StopBits)?"One":ds.StopBits;
+            SelectedStopBits = string.IsNullOrEmpty(ds.StopBits) ? "One" : ds.StopBits;
             AutoConnect = ds.AutoConnect;
             AlarmSound = ds.AlarmSound;
             DebugLogMode = ds.DebugLogMode;
@@ -105,7 +134,8 @@ namespace SmartFillMonitor.ViewModels
             }
             catch (Exception ex)
             {
-                //保存配置
+                //保存失败
+                LogService.Error($"保存配置失败:{ex}");
             }
         }
     }
