@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using SmartFillMonitor.Services;
 using SmartFillMonitor.ViewModels;
 using System.Configuration;
 using System.Data;
@@ -27,13 +28,14 @@ namespace SmartFillMonitor
         private const string LogTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss fff} [{Level}] ({ThreadId)} {Message} {NewLine} {NewLine} {Exception}";
         private const string LogPath = "Logs\\log-.txt";
         private const string DbFilePaht = "SmartFillMonitor.db";
+        private const string DbConnectionString = "Data Source=SmartFillMonitor.db";//给Freesql使用的连接字符串，SQLite不需要用户名密码
         public IServiceProvider ServiceProvider { get; private set; }
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             ConfigLogging();//配置日志
-
+            InitialCoreServiceAsync();//调用数据库初始化方法，确保数据库文件和表存在
             var services = new ServiceCollection();//创建DI集合
             ConfigureServices(services);//把所有ViewModel放进这个集合
             ServiceProvider = services.BuildServiceProvider();
@@ -45,6 +47,11 @@ namespace SmartFillMonitor
 
         }
 
+        private async Task InitialCoreServiceAsync()
+        {
+            Log.Debug("Initialzie Database");
+            DbProvider.Initialize(DbConnectionString);
+        }
         private void ConfigLogging()
         {
             Log.Logger = new LoggerConfiguration()

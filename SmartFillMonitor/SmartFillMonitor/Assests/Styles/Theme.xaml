@@ -77,6 +77,98 @@
         <views:SettingView/>
     </DataTemplate>
     
+    <!--TabControl Style-->
+    <Style TargetType="TabControl" x:Key="AppTabControlStyle">
+        <Setter Property="Background" Value="{StaticResource AppBgDark}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{StaticResource AppTextMain}"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0"
+                                    Background="{StaticResource AppBgHeader}"
+                                    BorderBrush="{StaticResource AppBorderBrush}"
+                                    BorderThickness="0,0,0,1"
+                                    Padding="6,8,0,0">
+                                <TabPanel x:Name="HeaderPanel"
+                                          Panel.ZIndex="1"
+                                          IsItemsHost="True"
+                                          KeyboardNavigation.TabIndex="1"/>
+                            </Border>
+                            <Border Grid.Row="1"
+                                    Background="{StaticResource AppBgDark}"
+                                    BorderThickness="0"
+                                    Padding="4,0,4,4">
+                                <ContentPresenter x:Name="PART_SelectedContentHost"
+                                                  ContentSource="SelectedContent"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--TabItem Style-->
+    <Style TargetType="TabItem" x:Key="AppTabItemStyle">
+        <Setter Property="Foreground" Value="{StaticResource AppTextMuted}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="20,10"/>
+        <Setter Property="Margin" Value="2,0,0,0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border x:Name="TabBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            CornerRadius="8,8,0,0"
+                            Padding="{TemplateBinding Padding}"
+                            Margin="{TemplateBinding Margin}">
+                        <Grid>
+                            <Border x:Name="TabAccentBar"
+                                    Background="Transparent"
+                                    CornerRadius="2"
+                                    Height="3"
+                                    Width="24"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Center"/>
+                            <ContentPresenter x:Name="ContentSite"
+                                              ContentSource="Header"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="0,3,0,0"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="TabBorder" Property="Background" Value="#2F3237"/>
+                            <Setter Property="Foreground" Value="{StaticResource AppTextMain}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="TabBorder" Property="Background" Value="{StaticResource AppBgDark}"/>
+                            <Setter TargetName="TabAccentBar" Property="Background" Value="{StaticResource AppAccentColor}"/>
+                            <Setter TargetName="TabAccentBar" Property="Width" Value="32"/>
+                            <Setter Property="Foreground" Value="{StaticResource AppTextMain}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--BorderStyle-->
     <Style x:Key="CardStyle" TargetType="Border">
         <Setter Property="Background" Value="{StaticResource AppBgDark}"/>
