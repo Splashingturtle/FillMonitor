@@ -35,7 +35,7 @@ namespace SmartFillMonitor
             base.OnStartup(e);
 
             ConfigLogging();//配置日志
-            InitialCoreServiceAsync();//调用数据库初始化方法，确保数据库文件和表存在
+            _ = InitialCoreServiceAsync();//调用数据库初始化方法，确保数据库文件和表存在
             var services = new ServiceCollection();//创建DI集合
             ConfigureServices(services);//把所有ViewModel放进这个集合
             ServiceProvider = services.BuildServiceProvider();

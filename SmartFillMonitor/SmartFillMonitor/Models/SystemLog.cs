@@ -22,7 +22,7 @@ namespace SmartFillMonitor.Models
         [Column(Name = "Exception",StringLength = 1000)]
         public string Exception { get; set; }
 
-        [Column(Name = "Message",StringLength = 50)]
+        [Column(Name = "RenderedMessage", StringLength = 50)]
         public string RenderedMessage { get; set; }
 
         [Column(Name = "Properties",StringLength = 1000)]

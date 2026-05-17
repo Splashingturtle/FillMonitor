@@ -62,7 +62,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" Orientation="Horizontal">
-                        <TextBlock Text="正在查询" Visibility="{Binding Isbusy,Converter={StaticResource Boolean2VisibilityConverter}}" Foreground="LimeGreen" VerticalAlignment="Center"/>
+                        <TextBlock Text="正在查询" Visibility="{Binding IsBusy,Converter={StaticResource Boolean2VisibilityConverter}}" Foreground="LimeGreen" VerticalAlignment="Center"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <TextBlock Text="{Binding TotalCount,StringFormat=共 {0} 条}" Foreground="White" VerticalAlignment="Center" FontWeight="Bold"/>
