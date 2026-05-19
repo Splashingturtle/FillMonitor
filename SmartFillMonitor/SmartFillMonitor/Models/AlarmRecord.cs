@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using FreeSql.DataAnnotations;
@@ -21,7 +22,7 @@ namespace SmartFillMonitor.Models
         //报警级别
         public AlarmServerity AlarmServerity { get; set; }
         //报警开始时间
-        public DateTime StartTime {  get; set; } = DateTime.Now;
+        public DateTime StartTime { get; set; } = DateTime.Now;
         //报警恢复（设备接触故障）时间
         public DateTime EndTime { get; set; }
 
@@ -34,7 +35,7 @@ namespace SmartFillMonitor.Models
         //是否被人工确认
         public bool IsAcknowledged { get; set; } = false;
 
-        public DateTime? AckTime { get; set; } 
+        public DateTime? AckTime { get; set; }
 
         //确认操作人（记录用户名）
         public string? AckUser { get; set; }
@@ -75,4 +76,101 @@ namespace SmartFillMonitor.Models
         SystemError = 5001,
     }
     #endregion
+
+    #region
+
+    public class AlarmUiModel : INotifyPropertyChanged
+    {
+        private long _id;
+        private string _code;
+        private string _title;
+        private string _timeStr;
+        private string _description;
+
+        public long Id
+        {
+            get => _id;
+            set
+            {
+                if (value == _id) return;
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Code
+        {
+            get => _code;
+            set
+            {
+                if (value == _code) return;
+                _code = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                if (value == _title) return;
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string TimeStr
+        {
+            get => _timeStr;
+            set
+            {
+                if (value == _timeStr) return;
+                _timeStr = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                if (value == _description) return;
+                _description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public static AlarmUiModel FromRecord(AlarmRecord record)
+        {
+            var title = record.AlarmCode.GetDescription();
+            return new AlarmUiModel
+            {
+                Id = record.Id,
+                Code = $"E{(int)record.AlarmCode}",//加上前缀显得更像故障码 
+                Title = title,
+                TimeStr = record.StartTime.ToString("MM-dd HH:mm:ss"),
+                Description = record.Description
+            };
+        }
+    }
+    #endregion
+    
+    public static class EnumExtensions
+    {
+        public static string GetDescription(this Enum value) 
+        { 
+            var field = value.GetType().GetField(value.ToString());
+            var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
+            return attribute?.Description ?? value.ToString();
+        }
+    }
 }
